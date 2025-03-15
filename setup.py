@@ -26,11 +26,23 @@
 
 
 from distutils.core import setup
-from os import path
+from distutils.command.install import install
+from os import path, remove
 
 DIRNAME = path.dirname(path.realpath(__file__))
 
 name = lambda x : path.join(DIRNAME, x)
+
+
+class PreInstall(install):
+    def run(self):
+        try:
+            remove('/etc/init.d/usbkill')
+        except FileNotFoundError:
+            pass
+
+        install.run(self)
+
 
 setup(name='usbkill',
       version='1.0-rc.4',
@@ -38,10 +50,14 @@ setup(name='usbkill',
       author='Hephaestos',
       author_email='hephaestos@riseup.net',
       license='GPLv3',
-      url='https://github.com/hephaest0s/usbkill',
-      
+      url='https://github.com/xJ7v0/usbkill',
+
       packages=['usbkill'],
       scripts=[name('install/usbkill')],
-      data_files=[ ('/etc/', [ name('install/usbkill.ini') ]) ]
+      data_files=[
+            ('/etc/', [ name('install/usbkill.ini') ]),
+            ('/etc/init.d/', [ name('install/init.d/usbkill') ])
+      ],
+      cmdclass={'install': PreInstall},
      )
 
