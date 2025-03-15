@@ -24,7 +24,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-__version__ = "1.0-rc.4"
+__version__ = "1.0-rc.5"
 
 import re
 import subprocess
@@ -41,7 +41,7 @@ if CURRENT_PLATFORM.startswith("DARWIN"):
 	import plistlib
 
 # We compile this function beforehand for efficiency.
-DEVICE_RE = [ re.compile(".+ID\s(?P<id>\w+:\w+)"), re.compile("0x([0-9a-z]{4})") ]
+DEVICE_RE = [ re.compile(r".+ID\s(?P<id>\w+:\w+)"), re.compile("0x([0-9a-z]{4})") ]
 
 # Set the settings filename here
 SETTINGS_FILE = '/etc/usbkill.ini'
@@ -357,9 +357,9 @@ def startup_checks():
 	print("             _     _     _ _ _  \n" +
 			"            | |   | |   (_) | | \n" +
 			"  _   _  ___| |__ | |  _ _| | | \n" +
-			" | | | |/___)  _ \| |_/ ) | | | \n" +
+			" | | | |/___)  _ \\| |_/ ) | | | \n" +
 			" | |_| |___ | |_) )  _ (| | | | \n" +
-			" |____/(___/|____/|_| \_)_|\_)_)\n")
+			" |____/(___/|____/|_| \\_)_|\\_)_)\n")
 
 	# Check arguments
 	args = sys.argv[1:]
